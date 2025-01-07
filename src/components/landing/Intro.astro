@@ -1,0 +1,108 @@
+---
+import Logo from "../global/Logo.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+const steps = [
+  {
+    day: "Day 1",
+    title: "Book",
+    description: "Pay upfront and secure your spot.",
+  },
+  {
+    day: "Day 2",
+    title: "Brief",
+    description: "Share your goals and brand details.",
+  },
+  {
+    day: "Day 3",
+    title: "Design Delivery",
+    description: "We create your custom, high-converting design.",
+  },
+  {
+    day: "Day 4",
+    title: "Delivery",
+    description: "Receive your fresh, professional landing page design.",
+  },
+];
+---
+
+<div class="flex flex-col gap-5 lg:gap-10">
+  <Logo />
+
+  <div
+    class="flex flex-col lg:flex-row border p-8 border-dashed border-zinc-300 dark:border-zinc-700"
+  >
+    <div>
+      <div class="flex items-center gap-2 text-black dark:text-white">
+        <div class="size-2 rounded-lg bg-green-500 animate-pulse"></div>
+        <Text
+          tag="p"
+          variant="textSM"
+          class="text-black dark:text-white typing-animation"
+          data-text="Available — No subscription required"
+        >
+          <span class="typed-text"></span><span class="cursor">&nbsp;</span>
+        </Text>
+      </div>
+      <Text
+        tag="h1"
+        variant="displayLG"
+        class="text-black dark:text-white tracking-wide text-balance font-serif italic"
+      >
+        Transform your landing page for a fixed price
+      </Text>
+      <Text
+        variant="textSM"
+        class="text-zinc-500 dark:text-zinc-400 mt-4 text-pretty"
+      >
+        Professional designs that convert, at a price that won't surprise.
+      </Text>
+    </div>
+  </div>
+</div>
+<ul
+  class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-8 border-x border-dashed border-zinc-300 dark:border-zinc-700"
+>
+  {
+    steps.map((step) => (
+      <li>
+        <Text
+          tag="h3"
+          variant="textBase"
+          class="text-black dark:text-white block font-semibold"
+        >
+          {step.day}. {step.title}
+        </Text>
+        <Text
+          tag="p"
+          variant="textBase"
+          class="text-zinc-500 dark:text-zinc-400 text-pretty"
+        >
+          {step.description}
+        </Text>
+      </li>
+    ))
+  }
+</ul>
+
+<script type="module">
+  document.addEventListener("DOMContentLoaded", () => {
+    const elements = document.querySelectorAll(".typing-animation");
+
+    elements.forEach((element) => {
+      const text = element.dataset.text;
+      const typedTextSpan = element.querySelector(".typed-text");
+      const cursorSpan = element.querySelector(".cursor");
+      const typingSpeed = 100;
+
+      const typeText = (index = 0) => {
+        if (index <= text.length) {
+          typedTextSpan.textContent = text.substring(0, index);
+          setTimeout(() => typeText(index + 1), typingSpeed);
+        }
+      };
+
+      // Start the typing animation
+      setTimeout(() => typeText(), 1500);
+    });
+  });
+</script>

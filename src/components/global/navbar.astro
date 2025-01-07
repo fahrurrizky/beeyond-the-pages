@@ -1,0 +1,33 @@
+---
+import Logo from "./Logo.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import StarBottomLeft from "../assets/StarBottomLeft.astro";
+import StarBottomRight from "../assets/StarBottomRight.astro";
+import StarTopLeft from "../assets/StarTopLeft.astro";
+import StarTopRight from "../assets/StarTopRight.astro";
+---
+
+<nav
+  class="justify-between overflow-hidden relative bg-white/30 dark:bg-white/5"
+>
+  <div
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 relative border border-dashed border-zinc-300 dark:border-zinc-700"
+  >
+    <StarTopLeft />
+    <StarTopRight />
+    <StarBottomLeft />
+    <StarBottomRight />
+    <Logo />
+    <div class="flex items-center space-x-8">
+      <Text href="/features">
+        <Text tag="span" variant="textBase"> Features </Text>
+      </Text>
+      <Text href="/pricing">
+        <Text tag="span" variant="textBase"> Pricing </Text>
+      </Text>
+      <Text href="/docs">
+        <Text tag="span" variant="textBase"> Docs </Text>
+      </Text>
+    </div>
+  </div>
+</nav>

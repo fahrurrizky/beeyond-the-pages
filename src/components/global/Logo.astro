@@ -1,0 +1,30 @@
+---
+import Text from "../fundations/elements/Text.astro";
+import logo from "../../styles//btp.png";
+import { Image } from "astro:assets";
+---
+
+<Text
+  tag="a"
+  variant="textSM"
+  href="/"
+  class="font-semibold uppercase t text-black dark:text-white lg:text-base"
+>
+  <Image src={logo} alt="logo" class="white-logo scaled-logo"/>
+</Text>
+
+<style>
+  .white-logo {
+    filter: brightness(0) invert(1);
+  }
+  .scaled-logo {
+    width: 15%;
+    height: auto;
+  }
+
+  @media (max-width: 768px) {
+    .scaled-logo {
+      width: 35%;
+    }
+  }
+</style>

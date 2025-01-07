@@ -1,0 +1,22 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Shadow from "@/components/global/Shadow.astro";
+import Navbar from "@/components/global/navbar.astro";
+import Intro from "@/components/landing/Intro.astro";
+import Faq from "@/components/landing/Faq.astro";
+import Footer from "@/components/global/Footer.astro";
+import Pricing from "@/components/landing/Pricing.astro";
+---
+
+<BaseLayout>
+  <section class="relative overflow-hidden">
+    <Shadow />
+    <div class="p-8 lg:px-34 py-2 2xl:px-24 relative">
+      <Navbar />
+      <Intro />
+      <Pricing />
+      <Faq />
+      <Footer />
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,110 @@
+---
+import Text from "../fundations/elements/Text.astro";
+const faq = [
+  {
+    question: "What does the landing page redesign service include?",
+    answer:
+      "The service includes the redesign of up to 5 sections of your landing page. Streamer provides custom design tailored to your brand and goals, all completed within a 7 day turnaround time.",
+  },
+  {
+    question: "How much does the service cost?",
+    answer:
+      "The base service for redesigning up to 5 sections of your landing page costs $699. Each additional section beyond the initial 5 is priced at $99.",
+  },
+  {
+    question: "How long does the redesign process take?",
+    answer:
+      " Your landing page redesign will be completed within 5 business days from the start of the project.",
+  },
+  {
+    question: "What if I need more than 5 sections redesigned?",
+    answer:
+      "No problem! We can redesign additional sections beyond the initial 5. Each extra section is priced at $99.",
+  },
+  {
+    question: "How do we communicate during the project?",
+    answer:
+      "Streamer uses a Discord to ensure clear communication throughout the redesign process. ",
+  },
+  {
+    question: "What if I'm not satisfied with the design?",
+    answer:
+      "Your satisfaction is priority. Streamer offer revisions to ensure you're happy with the final result. Streamer works with you to make necessary adjustments within the scope of the project.",
+  },
+  {
+    question: "Do you offer refunds?",
+    answer:
+      "Due to the nature of our service and the immediate start of work, we don't offer refunds once the project has begun. However, we're committed to delivering a design that meets your needs and expectations.",
+  },
+];
+---
+
+<div
+  class="grid grid-cols-1 gap-4 md:grid-cols-3 border-x p-8 border-dashed border-zinc-300 dark:border-zinc-700"
+>
+  <div>
+    <Text
+      tag="h2"
+      variant="textXL"
+      class="tracking-tighter font-semibold text-black dark:text-white"
+    >
+      Frequently asked questions
+    </Text>
+    <div class="mt-2">
+      <Text tag="p" variant="textSM" class="text-zinc-500 dark:text-zinc-400">
+        Can't find your answer?
+        <br />
+        Send us and <Text
+          tag="a"
+          class="underline hover:text-black dark:text-white duration-200"
+          href="mailto:michael@andreuzza.com">email</Text
+        >
+      </Text>
+    </div>
+  </div>
+  <div class="lg:col-span-2">
+    <div x-data="{selected:null}">
+      <ul
+        class="list-none text-black dark:text-white"
+        role="list"
+        @click="open = !open">{faq.map((item, index) => (
+    <li class="relative">
+      <button
+        class="w-full py-2 text-left focus:text-oxido"
+        @click={`selected !== ${index + 1} ? selected = ${index + 1} : selected = null`}
+        type="button"
+      >
+        <div class="items-center flex justify-between ">
+          <Text tag="p" variant="taxtBase" class="text-black dark:text-white">
+              {item.question}
+            </Text>
+          <svg
+            class="ml-4 duration-200 h-5 inline rotate-180 transform transition-transform w-5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+            :class="{'rotate-180': open, 'rotate-0': !open}"
+          >
+            <path
+              d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
+              clip-rule="evenodd"
+              fill-rule="evenodd"
+            ></path>
+          </svg>
+        </div>
+      </button>
+      <div
+        class="relative overflow-hidden duration-700 max-h-0 transition-all"
+        style=""
+        x-bind:style={`selected == ${index + 1} ? 'max-height: ' + $refs.container${index + 1}.scrollHeight + 'px' : ''`}
+        x-ref={`container${index + 1}`}
+      >
+        <div class="text-base  py-8 pt-0 text-zinc-500 dark:text-zinc-400" set:html={item.answer} />
+      </div>
+    </li>
+  ))}
+      </ul>
+    </div>
+  </div>
+
+</div>
