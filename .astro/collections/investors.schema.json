@@ -1,0 +1,35 @@
+{
+  "$ref": "#/definitions/investors",
+  "definitions": {
+    "investors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "major",
+              "minor"
+            ]
+          },
+          "subtitle": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "type"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

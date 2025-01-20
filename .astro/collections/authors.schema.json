@@ -1,0 +1,40 @@
+{
+  "$ref": "#/definitions/authors",
+  "definitions": {
+    "authors": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "socials": {
+          "type": "object",
+          "properties": {
+            "github": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "website": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "profilePicture": {
+          "type": "string"
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "website"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

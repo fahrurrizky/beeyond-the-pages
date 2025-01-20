@@ -1,0 +1,46 @@
+{
+  "$ref": "#/definitions/projects",
+  "definitions": {
+    "projects": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "subtitle": {
+          "type": "string"
+        },
+        "contributors": {
+          "type": "number"
+        },
+        "contributorsBy": {
+          "type": "number"
+        },
+        "stars": {
+          "type": "number"
+        },
+        "starsBy": {
+          "type": "number"
+        },
+        "repoUrl": {
+          "type": "string"
+        },
+        "logo": {
+          "type": "string"
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "subtitle",
+        "contributors",
+        "stars",
+        "repoUrl"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
