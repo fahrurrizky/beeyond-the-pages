@@ -5,6 +5,9 @@ export default defineConfig({
    vite: {
     plugins: [tailwindcss()],
   },
+  devToolbar: {
+    enabled: false,
+  },
    site: 'https://yourdomain.com',
   integrations: [sitemap()]
 });
