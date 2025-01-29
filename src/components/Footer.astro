@@ -1,10 +1,47 @@
 ---
-import { SITE_NAME } from '../consts';
+import { SITE_NAME } from "../consts";
+import BgFooter from "../components/BgFooter.astro";
 const now = new Date();
-const formatter = new Intl.DateTimeFormat('en-US', { year: 'numeric' });
+const formatter = new Intl.DateTimeFormat("en-US", { year: "numeric" });
 ---
-<footer class="py-6.25 border-t-1 border-gray-200 c-gray-600 grid place-content-center gap-[1ch] grid-cols-[repeat(3,auto)]">
-    <span class="grid-col-[span_1]">&copy; {formatter.format(now)} {SITE_NAME}</span>
-    <span class="grid-col-[span_1]">&mdash;</span>
-    <span class="grid-col-[span_1]">Made with :heart: in :city:</span>
+
+<footer class="border-t-1 border-gray-200 c-gray-600 place-content-center">
+  <BgFooter gridBg>
+    <p class="text-sm">
+      &copy; {formatter.format(now)}
+      {SITE_NAME} - Unveiling The World Through Words
+    </p>
+    <p class="text-sm">
+      <!-- <a href="/legal">All rights reserved</a> &bull; -->
+      <a href="/about">Help</a> &bull;
+      <a href="/about">Privacy</a> &bull;
+      <a href="/about">Member</a> &bull;
+      <a href="/about">About</a> &bull;
+      <a href="mailto:shoftimetech@gmail.com">Contact</a>
+    </p>
+    <p class="text-sm">
+      <a href="/legal">All rights reserved</a> &bull;
+    </p>
+    <img
+      src="/public/logo/btp.png"
+      alt="beeyondthepages"
+      class="w-150px lg:w-190px h-auto cursor-pointer justify-self-center"
+      onclick="window.location.href='/'"
+      onmouseover="this.style.opacity='0.7'"
+      onmouseout="this.style.opacity='1'"
+    />
+  </BgFooter>
 </footer>
+
+<style>
+  footer a {
+    transition:
+      opacity 0.3s ease,
+      text-decoration 0.3s ease;
+  }
+
+  footer a:hover {
+    opacity: 0.6;
+    text-decoration: underline;
+  }
+</style>

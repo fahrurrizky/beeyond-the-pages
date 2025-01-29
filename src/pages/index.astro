@@ -1,47 +1,34 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
-import CountUp from '../components/CountUp.astro';
 import Section from '../components/Section.astro';
 import { getCollection } from 'astro:content';
-import ProjectCard from '../components/ProjectCard.astro';
+import BestStory from '../pages/story/best-story.astro';
+import TodayHugging from '../components/todays-hugging.vue';
 import SectionSpacer from '../components/SectionSpacer.astro';
 import StatsGrid from '../components/StatsGrid.astro';
 import InvestorGrid from '../components/InvestorGrid.astro';
 
+import pinia from '../stores/pinia';
+
 const projects = await getCollection('projects');
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title="Welcome to Beeyond The Pages.">
 	<Header gridBg>
-		<small class="small">can you believe this text is so small?</small>
-		<h2 class="text-12 leading-12 lg:text-20 lg:leading-20"><span class="font-mono">NAID</span> - A template for doers</h2>
-		<p class="subtitle w-85% lg:w-50% mx-auto mt-5">A short manifesto about how this project is going to change the world.</p>
+		<small class="small">Do you believe those words are magic?</small>
+		<h2 class="text-6 leading-6 lg:text-20 lg:leading-20">“A few nice words can help a person more than what you think, watch your words.”</h2>
+		<p class="text-3 lg:text-6 subtitle w-85% lg:w-50% mx-auto mt-2 lg:mt-5">I wasn't aware that words could hold so much. I didn't know a sentence could be so full. </p>
 	</Header>
 	<main>
-		<Section index source="projects.json" fullWidthBorder>
-			<h2 class="title">Projects</h2>
-			<p class="subtitle-small">A short blurb about the projects you are deciding to list here and what they are about. Make it pithy and worth investing in.</p>
-			<ul class="my-5 project-list ignore-content-container border-y-1 border-y-gray-200 border-y-dotted">
-				{projects.map((proj: any) => <ProjectCard {...proj.data} />)}
-			</ul>
-			<div class="grid md:grid-cols-[1fr_250px] py-12.5">
-				<div class="grid-col-1 pr-12.5">
-					<h3 class="mb-3 project-title">Mission</h3>
-					<p class="subtitle-small">Another pithy statement about the nature of these projects. Talk more about how they're beneficial to all developers/users and really underline how helpful they are in improving DX/UX.</p>
-				</div>
-				<div class="font-mono">
-					<small>$ cmd to run</small><br/><br/>
-					<small>{'{An animation of some kind.}'}</small>
-				</div>
-			</div>
+		<Section index source=".....THE BEST STORIES IN WEEK" fullWidthBorder>
+			<BestStory />
 		</Section>
-		<SectionSpacer size="md" />
-		<Section fullWidthBorder={false}>
-			<h2 class="text-xl my-10">Our projects are trusted. By everyone? You bet! Names you recognize? Probably! Used all over the world? Absolutely!</h2>
+		<SectionSpacer size="sm" text="TODAY'S HUGGINGS" link="/" linkText="View All" icon="../../public/icon/hug.svg"/>
+		<Section index padBlock={false}>
+			<TodayHugging :pinia="pinia"/>
 		</Section>
-		<StatsGrid entryName='downloads' />
-		<SectionSpacer size="md" />
+		<SectionSpacer size="sm" text="THE LATEST STORIES" link="/" linkText="View All" icon="../../public/icon/recent.svg"/>
 		<Section variant="dark" index source="statement.md" fullWidthBorder>
 			<div class="lg:w-[60%] md:w-[70%] mx-auto">
 				<h2 class="title">Belief Statement</h2>
@@ -73,3 +60,4 @@ const projects = await getCollection('projects');
 		</Section>
 	</main>
 </Layout>
+  

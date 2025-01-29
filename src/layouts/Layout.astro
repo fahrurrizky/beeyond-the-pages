@@ -1,88 +1,249 @@
 ---
-import Footer from '../components/Footer.astro';
-import { SITE_NAME } from '../consts';
+import Footer from "../components/Footer.astro";
+import { SITE_NAME } from "../consts";
 
 interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
-const navLinks = { 
-	"/":"Home",
-	"/blog":"Blog",
-	"/about":"About"
+const navLinks = {
+  "/blog": "Life",
+  "/love": "Love",
+  "/about": "Loss",
+};
+interface NavUser {
+  href: string;
+  icon: string;
+  hoverText: string;
+  isProfile?: boolean;
+  notificationCount?: number;
 }
+
+let navUser: NavUser[] = [
+  {
+    href: "/share-story",
+    icon: "/public/icon/write2.svg",
+    hoverText: "Share Story",
+  },
+  {
+    href: "/notification",
+    icon: "/public/icon/notification.svg",
+    hoverText: "Notification",
+    notificationCount: 11,
+  },
+  {
+    href: "/register",
+    icon: "/public/icon/user-profile.svg",
+    hoverText: "Be a Part",
+  },
+];
+// condition login
+const isLoggedIn = true;
+const user = {
+  profilePicture:
+    "/public/assets/Snapinst.app_474035939_18088989637543359_3199483165713372870_n_1080.jpg",
+  hoverText: "Profile",
+};
+if (isLoggedIn) {
+  navUser = navUser.filter(({ href }) => href !== "/register");
+  navUser.push({
+    href: "/profile",
+    icon: user.profilePicture,
+    hoverText: user.hoverText,
+    isProfile: true,
+  });
+}
+// condition home page
+const isHomePage = Astro.url.pathname === "/";
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve" height="100px" width="100px"><text y=".9em" font-size="90">0️⃣</text></svg>' />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title || SITE_NAME}</title>
-	</head>
-	<body>
-		<nav class="border-b-1 border-b-gray-200">
-			<div class="flex items-center justify-between border-x-1 border-gray-200 pl-5 wrapper mx-auto">
-				<h1 class="font-mono text-xl">NAID</h1>
-				<ul class={`grid grid-auto-flow-col`}>
-					{Object.entries(navLinks).map(([href, title]) => {
-						return <li class="grid-col-[span_1] block">
-							<a href={href} class="text-sm px-5 py-8 tracking-0.1 block">{title}</a>
-						</li>
-					})}
-				</ul>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Beyond The Pages - Unveiling The World Through Words" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/png" href="/public/logo/bee_circle.png" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#ffffff" />
+    <title>{title || SITE_NAME}</title>
+  </head>
+  <body>
+    <!-- navbar -->
+    <nav
+      class="border-b-1 border-b-gray-200 fixed top-2 lg:top-0 right-0 left-0 lg:bg-white bg-white/50 backdrop-blur-md mx-4 lg:mx-0 lg:w-full rounded-[36px] lg:rounded-[0px] z-9999"
+    >
+      <div
+        class="flex items-center justify-between lg:border-x-1 border-gray-200 pl-3 pr-5 wrapper mx-auto"
+      >
+        <img
+          src="/public/logo/btp.png"
+          alt="beeyondthepages"
+          class="w-150px h-auto cursor-pointer"
+          onclick="window.location.href='/'"
+          onmouseover="this.style.opacity='0.7'"
+          onmouseout="this.style.opacity='1'"
+        />
+        {isHomePage ? (
+			<ul class={`hidden lg:grid grid-auto-flow-col gap-5 font-mono`}>
+			  {Object.entries(navLinks).map(([href, title]) => (
+				<li class="grid-col-[span_1] block">
+				  <a
+					href={href}
+					class="text-sm py-5 tracking-0.1 block"
+					onmouseover="this.style.opacity='0.2'"
+					onmouseout="this.style.opacity='1'"
+				  >
+					{title}
+				  </a>
+				</li>
+			  ))}
+			</ul>
+		  ) : (
+			<div class="hidden lg:relative lg:flex lg:items-center lg:py-3.7">
+				<img src="/public/icon/search.svg" alt="Search" class="absolute left-2 w-4 h-4"/>
+				<input
+					type="text"
+					placeholder="Search..."
+					class="p-1 pl-6 text-sm w-70 border rounded-full focus:outline-none focus:ring-2 focus:ring-yellow-200"
+					aria-label="Search"
+				/>
 			</div>
-		</nav>
-		<slot />
-		<Footer />
-	</body>
+		  )}
+        </ul>
+        <ul class={`grid grid-auto-flow-col items-center gap-5 relative`}>
+			{
+			  navUser
+				.filter(({ href }) => !(href === "/notification" && !isLoggedIn)) // Filter out notification icon if not logged in
+				.map(
+				  ({ href, icon, hoverText, notificationCount = 0, isProfile }) => (
+					<li class="grid-col-[span_1] block group relative">
+					  <a href={href} class="flex items-center relative">
+						<img
+						  src={icon}
+						  alt={hoverText}
+						  class={`w-5 h-5 ${isProfile ? "rounded-full border border-gray-300" : ""} ${notificationCount !== 0 ? "bell-swing" : ""}`} 
+						/>
+						{notificationCount > 0 && (
+						  <span class="notification-badge">
+							{notificationCount}
+						  </span>
+						)}
+						<span class="absolute top-full left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+						  {hoverText}
+						</span>
+					  </a>
+					</li>
+				  )
+				)
+			}
+		</ul>		   
+      </div>
+    </nav>
+    <!-- content -->
+    <slot />
+    <!-- footer -->
+    <Footer />
+  </body>
 </html>
+
 <style is:global>
-	html,
-	body {
-		height: 100%;
-		min-height: 100vh;
-	}
-	body {
-		display: flex;
-		flex-flow: column;
-	}
-	body > main {
-		flex: 1;
-	}
-	.content-wrapper {
-        :is(h2,h3,h4,h5,h6) {
-            font-weight: 600;
-            margin-top: 1ex;
-        }
-        p {
-            margin-top: 1ex;
-        }
-        h2 {
-            font-size: 1.875rem;
-        }
-        h3 {
-            font-size: 1.5rem;
-        }
-        h4 {
-            font-size: 1.35rem;
-        }
-        h5, h6 {
-            font-weight: 500;
-            font-size: 1.1rem;
-        }
-		ul {
-			list-style-type:square;
-			list-style-position: inside;
-			margin-top: 1ex;
-		}
-		pre {
-			margin-top: 1ex;
-			padding-block: 1.5rem;
-		}
+  @keyframes bell-swing {
+    0% {
+      transform: rotate(0deg);
     }
+    25% {
+      transform: rotate(-15deg);
+    }
+    50% {
+      transform: rotate(0deg);
+    }
+    75% {
+      transform: rotate(15deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+
+  .bell-swing {
+    animation: bell-swing 0.5s ease-in-out infinite;
+    transform-origin: top center;
+  }
+  .notification-badge {
+    position: absolute;
+    top: -0.5rem; /* Posisi di atas */
+    right: -0.5rem; /* Posisi di kanan */
+    color: rgb(220, 60, 60); /* Warna teks putih */
+    font-size: 0.65rem; /* Ukuran font kecil */
+    width: 1rem; /* Diameter lingkaran */
+    height: 1rem; /* Diameter lingkaran */
+    border-radius: 50%; /* Bentuk lingkaran */
+    display: flex;
+    align-items: center; /* Teks rata tengah vertikal */
+    justify-content: center; /* Teks rata tengah horizontal */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sedikit bayangan */
+  }
+  .rounded-full {
+    border-radius: 9999px;
+  }
+  html,
+  body {
+    height: 100%;
+    min-height: 100vh;
+  }
+  body {
+    display: flex;
+    flex-flow: column;
+  }
+  body > main {
+    flex: 1;
+  }
+  .content-wrapper {
+    :is(h2, h3, h4, h5, h6) {
+      font-weight: 600;
+      margin-top: 1ex;
+    }
+    p {
+      margin-top: 1ex;
+    }
+    h2 {
+      font-size: 1.875rem;
+    }
+    h3 {
+      font-size: 1.5rem;
+    }
+    h4 {
+      font-size: 1.35rem;
+    }
+    h5,
+    h6 {
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+    ul {
+      list-style-type: square;
+      list-style-position: inside;
+      margin-top: 1ex;
+    }
+    pre {
+      margin-top: 1ex;
+      padding-block: 1.5rem;
+    }
+  }
+  /* define font local */
+  @font-face {
+    font-family: 'SpratCondensed';
+    src: url('/public/font/Sprat-CondensedBlack.otf') format('otf');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  .font-sprat {
+    font-family: 'SpratCondensed';
+  }
+  h2 {
+    font-family: 'SpratCondensed';
+  }
 </style>

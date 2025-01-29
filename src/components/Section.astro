@@ -30,7 +30,8 @@ const {
     ]}>
     <div class:list={[
             "wrapper border-x-1 dark:border-gray-800 relative",
-            !fullWidthBorder ? 'border-t-1 border-gray-200' : '',
+            // !fullWidthBorder ? 'border-t-1 border-gray-200' : '',
+            !fullWidthBorder ? '' : '',
             /* @unocss-include */
             `${variantInside}-inside`,
         ]}>
@@ -39,8 +40,8 @@ const {
                 /* the -1px is to offset the border width, I don't like it either but it works */
                 !fullWidthBorder ? 'border-t-1 border-gray-200 dark:border-gray-800 mt-[-1px]' : '',
             ]}></span>}
-        {source && <span class="section--source">{source}</span>}
-        <div class:list={[padBlock && "py-12.5","content-container dark:bg-gray-900 dark:c-gray-200 dark-inside:bg-gray-900 dark-inside:c-gray-200"]}>
+        {source && <span class="section--source font-sprat text-12.8px">{source}</span>}
+        <div class:list={[padBlock && "py-10","content-container dark:bg-gray-900 dark:c-gray-200 dark-inside:bg-gray-900 dark-inside:c-gray-200"]}>
             <slot />
         </div>
     </div>
@@ -53,7 +54,7 @@ const {
 </script>
 <style>
     .content-container > :global(:not(hr, .ignore-content-container, .section)) {
-        padding-inline: 3.125rem; /* 50px */
+        padding-inline: 1.125rem; /* 50px */
     }
     .content-container > :global(.inherit-content-container) {
         padding-inline: 0;

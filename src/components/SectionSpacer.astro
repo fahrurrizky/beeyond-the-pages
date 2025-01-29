@@ -1,14 +1,59 @@
 ---
 interface Props {
-    size?: 'sm'|'md'|'lg'|'xl'
+  size?: "sm" | "md" | "lg" | "xl";
+  text?: string;
+  link?: string;
+  linkText?: string;
+  textSize?: "sm" | "md" | "lg" | "xl";
+  icon?: string;
 }
 
 // @unocss-include
 export const sizes = {
-    sm: 'py-8',
-    md: 'py-16',
-    lg: 'py-24',
-    xl: 'py-32'
-}
+  sm: "py-2 px-4",
+  md: "py-16",
+  lg: "py-24",
+  xl: "py-32",
+};
+
+export const textSizes = {
+  sm: "text-sm",
+  md: "text-md",
+  lg: "text-lg",
+  xl: "text-xl",
+};
+
+
 ---
-<div class:list={[sizes[Astro.props.size ?? 'md'], 'wrapper border-x-1 border-t-1 border-gray-200']}></div>
+
+<div
+  class="border-t-1 border-gray-200 border-b-1 border-gray-200 c-gray-600 place-content-center"
+>
+  <div class:list={[sizes[Astro.props.size ?? "md"], "wrapper border-x-1"]}>
+    <div class="flex justify-between items-center">
+      {Astro.props.text && (
+        <small class:list={[textSizes[Astro.props.textSize ?? 'md'], 'font-sprat c-gray-900']}>
+          {Astro.props.text}
+          {Astro.props.icon && (
+            <span>
+              <img src={Astro.props.icon} alt="icon" width="36" height="36" class="inline-block"/>
+            </span>
+          )}
+        </small>
+      )}
+      {
+        Astro.props.link && Astro.props.linkText && (
+          <a href={Astro.props.link}>
+            <small
+              class="font-mono hover:underline c-gray-900"
+              onmouseover="this.style.opacity='0.7'"
+              onmouseout="this.style.opacity='1'"
+            >
+              {Astro.props.linkText}
+            </small>
+          </a>
+        )
+      }
+    </div>
+  </div>
+</div>
