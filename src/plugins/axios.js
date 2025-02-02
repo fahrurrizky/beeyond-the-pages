@@ -3,26 +3,22 @@ import { getCk, delCk } from '../utils/cookies';
 
 const baseURL = import.meta.env.VITE_BASEURL;
 
-const controller = new AbortController();
-const { signal } = controller;
-
 /**
  * Api instance plugin using axios
  */
 const api = axios.create({
   baseURL,
-  signal,
 });
 api.interceptors.request.use(
   (config) => {
     const configs = config;
-    const CERT = getCk('CERT');
-    if (CERT) {
-      configs.headers.Authorization = `Bearer ${CERT}`;
-    } else {
-      delCk('CERT');
-      delete configs.headers.Authorization;
-    }
+    // const CERT = getCk('CERT');
+    // if (CERT) {
+    //   configs.headers.Authorization = `Bearer ${CERT}`;
+    // } else {
+    //   delCk('CERT');
+    //   delete configs.headers.Authorization;
+    // }
     return configs;
   },
   (error) => {

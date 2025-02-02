@@ -4,12 +4,9 @@
  */
 export const endpoint = {
   auth: '/auth',
-  master: '/api/master',
-  planProd: '/api/plan-prod',
-  prod: '/api/production',
-  device: '/api/device',
+  mocki: '/f524c860-388f-419f-ad49-e99500ddfbf9',
 };
 
-export const DB_NAME = 'dcs';
-export const DB_STORE_NAME = 'maka';
-export const ROLE_VAR = 'role';
+export const DB_NAME = 'blog';
+export const DB_STORE_NAME = 'beeyondthepages';
+

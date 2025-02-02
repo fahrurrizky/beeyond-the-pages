@@ -1,9 +1,9 @@
 import { api } from '../../plugins/axios';
 import { endpoint } from '../../utils/constant';
 
-const url = endpoint.home;
+const url = endpoint.mocki;
 
-const listBestStories = () => api.get(`${url}/best-stories`);
+const listBestStories = () => api.get(`${url}`);
 
 export {
   listBestStories,

@@ -1,63 +1,112 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import Section from '../components/Section.astro';
-import { getCollection } from 'astro:content';
-import BestStory from '../pages/story/best-story.astro';
-import TodayHugging from '../components/todays-hugging.vue';
-import SectionSpacer from '../components/SectionSpacer.astro';
-import StatsGrid from '../components/StatsGrid.astro';
-import InvestorGrid from '../components/InvestorGrid.astro';
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Section from "../components/Section.astro";
+import { getCollection } from "astro:content";
+import BestStory from "../pages/story/best-story.astro";
+import TodayHugging from "./story/todays-hugging.vue";
+import SectionSpacer from "../components/SectionSpacer.astro";
+import InvestorGrid from "../components/InvestorGrid.astro";
 
-import pinia from '../stores/pinia';
-
-const projects = await getCollection('projects');
+const projects = await getCollection("projects");
 ---
 
 <Layout title="Welcome to Beeyond The Pages.">
-	<Header gridBg>
-		<small class="small">Do you believe those words are magic?</small>
-		<h2 class="text-6 leading-6 lg:text-20 lg:leading-20">“A few nice words can help a person more than what you think, watch your words.”</h2>
-		<p class="text-3 lg:text-6 subtitle w-85% lg:w-50% mx-auto mt-2 lg:mt-5">I wasn't aware that words could hold so much. I didn't know a sentence could be so full. </p>
-	</Header>
-	<main>
-		<Section index source=".....THE BEST STORIES IN WEEK" fullWidthBorder>
-			<BestStory />
-		</Section>
-		<SectionSpacer size="sm" text="TODAY'S HUGGINGS" link="/" linkText="View All" icon="../../public/icon/hug.svg"/>
-		<Section index padBlock={false}>
-			<TodayHugging :pinia="pinia"/>
-		</Section>
-		<SectionSpacer size="sm" text="THE LATEST STORIES" link="/" linkText="View All" icon="../../public/icon/recent.svg"/>
-		<Section variant="dark" index source="statement.md" fullWidthBorder>
-			<div class="lg:w-[60%] md:w-[70%] mx-auto">
-				<h2 class="title">Belief Statement</h2>
-				<p class="subtitle-mall">We believe in things that exist and are pragmatic. This can include buzzwords that make investors feel all warm inside.</p>
-				<ul class="flex flex-col gap-row-3 mt-3 subtitle-small">
-					<li><strong class="text-[1.2em]">Teamwork:</strong> Things and people should work together seamlessly for a better world and a better DX</li>
-					<li><strong class="text-[1.2em]">Performant:</strong> If you're not first you're last - some guy on TV once</li>
-					<li><strong class="text-[1.2em]">Even Tempered:</strong> Too blessed to be stressed. And too stressed to let the little things get to us</li>
-					<li><strong class="text-[1.2em]">On Kilter:</strong> When the going gets tough, the tough politely ask the weak to step up like just a little bit, if you don't mind</li>
-				</ul>
-			</div>
-		</Section>
-		<SectionSpacer size="md" />
-		<Section index source="investors.md" fullWidthBorder>
-			<div class="pb-12.5">
-				<h2 class="title">People who give us money!</h2>
-				<p class="subtitle-small md:w-[50%]">There's literally dozens of them, and they all want to be listed below to get some sort of credit for our work.</p>
-			</div>
-			<InvestorGrid />
-		</Section>
-		<SectionSpacer />
-		<Section index source="Component.framework" fullWidthBorder variantInside="dark">
-			<div class="grid lg:grid-cols-[4fr_1fr] place-items-center gap-5">
-				<h2 class="text-pretty title text-8 leading-8 font-bold c-gray-800 dark:c-gray-100">Interested in this theme? Like the look of it and need more in your life?<br/><span class="c-gray-500 dark:c-gray-300 text-[0.9em]">We know! It's pretty great.</span></h2>
-				<div>
-					<a href="https://github.com/studiolumina/naid" class="block fw-bold bg-gray-800 c-gray-100 text-5 text-center py-4 px-7">Visit Repo</a>
-				</div>
-			</div>
-		</Section>
-	</main>
+  <Header gridBg>
+    <small class="small">Do you believe those words are magic?</small>
+    <h2 class="text-6 leading-6 lg:text-20 lg:leading-20">
+      “A few nice words can help a person more than what you think, watch your
+      words.”
+    </h2>
+    <p class="text-3 lg:text-6 subtitle w-85% lg:w-50% mx-auto mt-2 lg:mt-5">
+      I wasn't aware that words could hold so much. I didn't know a sentence
+      could be so full.
+    </p>
+  </Header>
+  <main>
+    <Section index source=".....THE BEST STORIES IN WEEK" fullWidthBorder>
+      <BestStory />
+    </Section>
+    <SectionSpacer
+      size="sm"
+      text="TODAY'S HUGGINGS"
+      link="/"
+      linkText="View All"
+      icon="../../public/icon/hug.svg"
+    />
+    <Section index padBlock={false}>
+      <TodayHugging />
+    </Section>
+    <SectionSpacer
+      size="sm"
+      text="THE LATEST STORIES"
+      link="/"
+      linkText="View All"
+      icon="../../public/icon/recent.svg"
+    />
+    <Section variant="dark" index source="statement.md" fullWidthBorder>
+      <div class="lg:w-[60%] md:w-[70%] mx-auto">
+        <h2 class="title">Belief Statement</h2>
+        <p class="subtitle-mall">
+          We believe in things that exist and are pragmatic. This can include
+          buzzwords that make investors feel all warm inside.
+        </p>
+        <ul class="flex flex-col gap-row-3 mt-3 subtitle-small">
+          <li>
+            <strong class="text-[1.2em]">Teamwork:</strong> Things and people should
+            work together seamlessly for a better world and a better DX
+          </li>
+          <li>
+            <strong class="text-[1.2em]">Performant:</strong> If you're not first
+            you're last - some guy on TV once
+          </li>
+          <li>
+            <strong class="text-[1.2em]">Even Tempered:</strong> Too blessed to be
+            stressed. And too stressed to let the little things get to us
+          </li>
+          <li>
+            <strong class="text-[1.2em]">On Kilter:</strong> When the going gets
+            tough, the tough politely ask the weak to step up like just a little
+            bit, if you don't mind
+          </li>
+        </ul>
+      </div>
+    </Section>
+    <SectionSpacer size="md" />
+    <Section index source="investors.md" fullWidthBorder>
+      <div class="pb-12.5">
+        <h2 class="title">People who give us money!</h2>
+        <p class="subtitle-small md:w-[50%]">
+          There's literally dozens of them, and they all want to be listed below
+          to get some sort of credit for our work.
+        </p>
+      </div>
+      <InvestorGrid />
+    </Section>
+    <SectionSpacer />
+    <Section
+      index
+      source="Component.framework"
+      fullWidthBorder
+      variantInside="dark"
+    >
+      <div class="grid lg:grid-cols-[4fr_1fr] place-items-center gap-5">
+        <h2
+          class="text-pretty title text-8 leading-8 font-bold c-gray-800 dark:c-gray-100"
+        >
+          Interested in this theme? Like the look of it and need more in your
+          life?<br /><span class="c-gray-500 dark:c-gray-300 text-[0.9em]"
+            >We know! It's pretty great.</span
+          >
+        </h2>
+        <div>
+          <a
+            href="https://github.com/studiolumina/naid"
+            class="block fw-bold bg-gray-800 c-gray-100 text-5 text-center py-4 px-7"
+            >Visit Repo</a
+          >
+        </div>
+      </div>
+    </Section>
+  </main>
 </Layout>
-  
