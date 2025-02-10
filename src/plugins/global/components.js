@@ -2,7 +2,7 @@
 import BaseAlert from '@comp/BaseAlert.vue';
 import BaseButton from '@comp/BaseButton.vue';
 import BaseModal from '@comp/BaseModal.vue';
-import BaseResult from '@comp/BaseResult.vue';
+import ContaintLoader from '@comp/ContaintLoader.vue';
 import BaseTextarea from '@comp/BaseTextarea.vue';
 import BaseMultiselect from '@comp/BaseMultiselect.vue';
 import BasePopper from '@comp/BasePopper.vue';
@@ -25,7 +25,7 @@ const globalComponents = {
     app.component(BaseAlert.name, BaseAlert);
     app.component(BaseButton.name, BaseButton);
     app.component(BaseModal.name, BaseModal);
-    app.component(BaseResult.name, BaseResult);
+    app.component(ContaintLoader.name, ContaintLoader);
     app.component(BaseTextarea.name, BaseTextarea);
     app.component(BaseMultiselect.name, BaseMultiselect);
     app.component(BasePopper.name, BasePopper);

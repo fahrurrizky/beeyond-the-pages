@@ -1,0 +1,15 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Section from "../../components/Section.astro";
+import ShareSTory from "./ShareStory.vue";
+
+
+const title = "Write a Story";
+---
+<Layout title={title}>
+    <main class="pt-15">
+        <Section fullWidthBorder padBlock={false}>
+            <ShareSTory client:load/>
+        </Section>
+    </main>
+</Layout>

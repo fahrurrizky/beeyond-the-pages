@@ -2,21 +2,24 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Section from "../components/Section.astro";
-import { getCollection } from "astro:content";
-import BestStory from "../pages/story/best-story.astro";
-import TodayHugging from "./story/todays-hugging.vue";
+import BestStory from "./story/BestStory.vue";
+import TodaysHugging from "./story/TodaysHugging.vue";
+import TheLatestStories from "./story/TheLatestStories.vue";
 import SectionSpacer from "../components/SectionSpacer.astro";
 import InvestorGrid from "../components/InvestorGrid.astro";
-
-const projects = await getCollection("projects");
+import FirstLoader from "../components/FirstLoader.vue";
 ---
 
 <Layout title="Welcome to Beeyond The Pages.">
+  <FirstLoader client:load />
   <Header gridBg>
     <small class="small">Do you believe those words are magic?</small>
     <h2 class="text-6 leading-6 lg:text-20 lg:leading-20">
-      “A few nice words can help a person more than what you think, watch your
-      words.”
+      “A few nice words can help a person more than what you think,<mark
+        class="bg-blue-400 bg-opacity-45"
+      >
+        watch your words.</mark
+      >”
     </h2>
     <p class="text-3 lg:text-6 subtitle w-85% lg:w-50% mx-auto mt-2 lg:mt-5">
       I wasn't aware that words could hold so much. I didn't know a sentence
@@ -25,54 +28,44 @@ const projects = await getCollection("projects");
   </Header>
   <main>
     <Section index source=".....THE BEST STORIES IN WEEK" fullWidthBorder>
-      <BestStory />
+      <BestStory client:load />
     </Section>
     <SectionSpacer
       size="sm"
       text="TODAY'S HUGGINGS"
       link="/"
       linkText="View All"
-      icon="../../public/icon/hug.svg"
     />
     <Section index padBlock={false}>
-      <TodayHugging />
+      <TodaysHugging client:load />
     </Section>
     <SectionSpacer
       size="sm"
       text="THE LATEST STORIES"
       link="/"
       linkText="View All"
-      icon="../../public/icon/recent.svg"
     />
-    <Section variant="dark" index source="statement.md" fullWidthBorder>
-      <div class="lg:w-[60%] md:w-[70%] mx-auto">
+    <Section index padBlock={false}>
+      <TheLatestStories client:load />
+    </Section>
+    <SectionSpacer size="sm" />
+    <Section variant="dark" source="statement.md" fullWidthBorder>
+      <div class="lg:w-[90%] md:w-[70%] mx-auto">
         <h2 class="title">Belief Statement</h2>
         <p class="subtitle-mall">
-          We believe in things that exist and are pragmatic. This can include
-          buzzwords that make investors feel all warm inside.
+          “For what it’s worth: it’s never too late or, in my case, too early to
+          be whoever you want to be. There’s no time limit, stop whenever you
+          want. You can change or stay the same, there are no rules to this
+          thing. We can make the best or the worst of it. I hope you make the
+          best of it. And I hope you see things that startle you. I hope you
+          feel things you never felt before. I hope you meet people with a
+          different point of view. I hope you live a life you’re proud of. If
+          you find that you’re not, I hope you have the courage to start all
+          over again.” - <i>Benjamin Button</i>
         </p>
-        <ul class="flex flex-col gap-row-3 mt-3 subtitle-small">
-          <li>
-            <strong class="text-[1.2em]">Teamwork:</strong> Things and people should
-            work together seamlessly for a better world and a better DX
-          </li>
-          <li>
-            <strong class="text-[1.2em]">Performant:</strong> If you're not first
-            you're last - some guy on TV once
-          </li>
-          <li>
-            <strong class="text-[1.2em]">Even Tempered:</strong> Too blessed to be
-            stressed. And too stressed to let the little things get to us
-          </li>
-          <li>
-            <strong class="text-[1.2em]">On Kilter:</strong> When the going gets
-            tough, the tough politely ask the weak to step up like just a little
-            bit, if you don't mind
-          </li>
-        </ul>
       </div>
     </Section>
-    <SectionSpacer size="md" />
+    <SectionSpacer size="sm" />
     <Section index source="investors.md" fullWidthBorder>
       <div class="pb-12.5">
         <h2 class="title">People who give us money!</h2>
@@ -86,26 +79,23 @@ const projects = await getCollection("projects");
     <SectionSpacer />
     <Section
       index
-      source="Component.framework"
+      source="sentence.shoftime"
       fullWidthBorder
       variantInside="dark"
     >
-      <div class="grid lg:grid-cols-[4fr_1fr] place-items-center gap-5">
+      <div class="place-items-center gap-5 mt-1 lg:mt-0">
         <h2
-          class="text-pretty title text-8 leading-8 font-bold c-gray-800 dark:c-gray-100"
+          class="text-pretty title text-5 lg:text-8 leading-5 lg:leading-8 font-bold c-gray-800 dark:c-gray-100"
         >
-          Interested in this theme? Like the look of it and need more in your
-          life?<br /><span class="c-gray-500 dark:c-gray-300 text-[0.9em]"
-            >We know! It's pretty great.</span
+          You can't skip chapters, that's not how life works. You have to read
+          every line, meet every character. You won't enjoy all of it, Hell,
+          some chapters will make you cry for weeks. You will read things you
+          don't want to read, you will have moments when you don't want the
+          pages to end. But you have to keep going. Stories keep the world
+          revolving.<br /><span class="c-gray-500 dark:c-gray-300 text-[0.9em]"
+            >Live yours, don't miss out!</span
           >
         </h2>
-        <div>
-          <a
-            href="https://github.com/studiolumina/naid"
-            class="block fw-bold bg-gray-800 c-gray-100 text-5 text-center py-4 px-7"
-            >Visit Repo</a
-          >
-        </div>
       </div>
     </Section>
   </main>

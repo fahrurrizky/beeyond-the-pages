@@ -4,7 +4,7 @@
  */
 export const endpoint = {
   auth: '/auth',
-  mocki: '/f524c860-388f-419f-ad49-e99500ddfbf9',
+  mocki: '/57a3e248-b003-4898-8a9e-2454abf7739e',
 };
 
 export const DB_NAME = 'blog';

@@ -42,7 +42,7 @@ let navUser: NavUser[] = [
 const isLoggedIn = true;
 const user = {
   profilePicture:
-    "/public/assets/Snapinst.app_474035939_18088989637543359_3199483165713372870_n_1080.jpg",
+    "/public/assets/jon-tyson-XzUMBNmQro0-unsplash.jpg",
   hoverText: "Profile",
 };
 if (isLoggedIn) {
@@ -72,7 +72,7 @@ const isHomePage = Astro.url.pathname === "/";
   <body>
     <!-- navbar -->
     <nav
-      class="border-b-1 border-b-gray-200 fixed top-2 lg:top-0 right-0 left-0 lg:bg-white bg-white/50 backdrop-blur-md mx-4 lg:mx-0 lg:w-full rounded-[36px] lg:rounded-[0px] z-9999"
+      class="border-b-1 border-b-gray-200 fixed top-2 lg:top-0 right-0 left-0 lg:bg-white bg-white/50 backdrop-blur-md mx-4 lg:mx-0 lg:w-full rounded-[36px] lg:rounded-[0px] z-50"
     >
       <div
         class="flex items-center justify-between lg:border-x-1 border-gray-200 pl-3 pr-5 wrapper mx-auto"
@@ -106,7 +106,7 @@ const isHomePage = Astro.url.pathname === "/";
 				<input
 					type="text"
 					placeholder="Search..."
-					class="p-1 pl-6 text-sm w-70 border rounded-full focus:outline-none focus:ring-2 focus:ring-yellow-200"
+					class="p-1 pl-6 text-sm w-70 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-200"
 					aria-label="Search"
 				/>
 			</div>
@@ -123,7 +123,7 @@ const isHomePage = Astro.url.pathname === "/";
 						<img
 						  src={icon}
 						  alt={hoverText}
-						  class={`w-5 h-5 ${isProfile ? "rounded-full border border-gray-300" : ""} ${notificationCount !== 0 ? "bell-swing" : ""}`} 
+						  class={`w-5 h-5 ${isProfile ? "w-7 h-7 object-cover rounded-full border border-gray-300" : ""} ${notificationCount !== 0 ? "bell-swing" : ""}`} 
 						/>
 						{notificationCount > 0 && (
 						  <span class="notification-badge">

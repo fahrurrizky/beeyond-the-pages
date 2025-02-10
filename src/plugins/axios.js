@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { getCk, delCk } from '../utils/cookies';
 
-const baseURL = import.meta.env.VITE_BASEURL;
-
+const baseURL = import.meta.env.PUBLIC_BASE_URL;
 /**
  * Api instance plugin using axios
  */
@@ -11,7 +10,7 @@ const api = axios.create({
 });
 api.interceptors.request.use(
   (config) => {
-    const configs = config;
+    // const configs = config;
     // const CERT = getCk('CERT');
     // if (CERT) {
     //   configs.headers.Authorization = `Bearer ${CERT}`;
@@ -19,7 +18,7 @@ api.interceptors.request.use(
     //   delCk('CERT');
     //   delete configs.headers.Authorization;
     // }
-    return configs;
+    return config;
   },
   (error) => {
     throw error;

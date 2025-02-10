@@ -29,6 +29,9 @@ dependencies:
   '@popperjs/core':
     specifier: ^2.11.8
     version: 2.11.8
+  '@tinymce/tinymce-vue':
+    specifier: ^6.1.0
+    version: 6.1.0(vue@3.5.13)
   '@types/react':
     specifier: ^19.0.8
     version: 19.0.8
@@ -1734,6 +1737,18 @@ packages:
   /@sindresorhus/merge-streams@4.0.0:
     resolution: {integrity: sha512-tlqY9xq5ukxTUZBmoOp+m61cqwQD5pHJtFY3Mn8CA8ps6yghLH/Hw8UPdqg4OLmFW3IFlcXnQNmo/dh8HzXYIQ==}
     engines: {node: '>=18'}
+    dev: false
+
+  /@tinymce/tinymce-vue@6.1.0(vue@3.5.13):
+    resolution: {integrity: sha512-7JdaKMOaohuFWpjKwRmaZJbT/eNVUUYHG93R7+lUf7SUN+hSqd2spbuqZcki+tG9kaSAGd2ZmvJIsmzWDNAzpw==}
+    peerDependencies:
+      tinymce: ^7.0.0 || ^6.0.0 || ^5.5.1
+      vue: ^3.0.0
+    peerDependenciesMeta:
+      tinymce:
+        optional: true
+    dependencies:
+      vue: 3.5.13(typescript@5.7.3)
     dev: false
 
   /@trysound/sax@0.2.0:
