@@ -59,10 +59,4 @@ A flexible and reusable typography component for dynamic text elements. It allow
 - Apply predefined text styling variants (e.g., `displayXL`, `textMD`) for consistency across your project.
 - Add custom classes for additional styling with the `class` prop.
 
-Example usage:
-```astro
-<Text tag="h1" variant="displayXL" class="text-center">
-  Welcome to the new version!
-</Text>
-```
 -----
