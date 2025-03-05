@@ -1,6 +1,4 @@
-# Streamer
-
-## Template Integrations
+## Integrations
 - Tailwind CSS v4 Beta 
 - Astro SEO - Powered by [@astrolib/seo](https://github.com/onwidget/astrolib/tree/main/packages/seo)
 - Astro Sitemap - https://docs.astro.build/en/guides/integrations-guide/sitemap/
@@ -39,7 +37,6 @@ All commands are run from the root of the project, from a terminal:
 Learn more - Explore more through Astro's official [documentation](https://docs.astro.build).
 
 ------
-Updated on 21st October 2024
 
 ## This update includes:
 
@@ -69,7 +66,3 @@ Example usage:
 </Text>
 ```
 -----
-
-### [Support](https://lexingtonthemes.com/legal/support/)
-### [Documentation](https://lexingtonthemes.com/documentation/quick-start/)
-### [Get your bundle](https://lexingtonthemes.com)
