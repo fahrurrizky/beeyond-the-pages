@@ -3,46 +3,14 @@ import { ref, onMounted, onUnmounted } from "vue";
 
 const blogContent = ref("");
 const toolbar = ref(null);
+const linkPopover = ref(null);
 const isBigFont = ref(false);
 const isLinkPopoverVisible = ref(false);
-const linkInput = ref(null);
-const linkText = ref("");
-const hoveredLink = ref(""); // untuk menyimpan link yang di-hover
+const hoveredLink = ref(""); // Untuk menyimpan link yang di-hover
 const tooltip = ref(null);
-const toolbarButtons = ref(null);
-const linkPopover = ref(null);
-const selectedRange = ref(null);
 
 onMounted(() => {
   const contentEditable = document.getElementById("editor");
-  toolbarButtons.value = document.getElementById("toolbar-buttons");
-  linkPopover.value = document.getElementById("link-popover");
-  tooltip.value = document.getElementById("link-tooltip");
-
-  contentEditable.addEventListener("paste", (event) => {
-    // Mengambil data dari clipboard
-    const clipboardData = event.clipboardData;
-    const text = clipboardData.getData("text/plain");
-    const image = clipboardData.items[0]; // Menyimpan item gambar jika ada
-
-    // Jika ada gambar yang dipaste, proses gambar tersebut
-    if (image && image.type.startsWith("image")) {
-      event.preventDefault();
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        // Membuat elemen <img> baru dan memasukkannya ke dalam editor
-        const img = document.createElement("img");
-        img.src = e.target.result; // Data URL gambar
-        contentEditable.appendChild(img); // Menambahkan gambar ke dalam editor
-      };
-      reader.readAsDataURL(image.getAsFile()); // Membaca gambar sebagai URL data
-    } else if (text) {
-      // Jika hanya teks yang dipaste, masukkan teks dengan font yang benar
-      event.preventDefault();
-      document.execCommand("insertText", false, text);
-      document.execCommand("fontName", false, "sans-serif");
-    }
-  });
 
   contentEditable.addEventListener("input", () => {
     blogContent.value = contentEditable.innerHTML.trim();
@@ -54,31 +22,18 @@ onMounted(() => {
   contentEditable.addEventListener("mouseup", checkSelection);
   document.addEventListener("selectionchange", checkSelection);
 
+  // Event listener untuk menampilkan popover link saat hover
+  contentEditable.addEventListener("mouseover", handleMouseOver);
+  contentEditable.addEventListener("mouseout", handleMouseOut);
+
   document.addEventListener("click", (event) => {
-    // Cek apakah klik terjadi di dalam toolbar
-    const isToolbarClick = toolbar.value && toolbar.value.contains(event.target);
-    
-    // Cek apakah klik terjadi di editor
-    const isEditorClick = event.target === contentEditable;
-    
-    // Hanya sembunyikan toolbar jika klik di luar toolbar dan editor
-    if (!isToolbarClick && !isEditorClick) {
+    if (
+      !toolbar.value.contains(event.target) &&
+      event.target !== contentEditable &&
+      !linkPopover.value.contains(event.target)
+    ) {
       hideToolbar();
       hideLinkPopover();
-    }
-  });
-
-  // Event listener untuk hover pada link di dalam editor
-  contentEditable.addEventListener("mouseover", (event) => {
-    if (event.target.tagName === "A") {
-      hoveredLink.value = event.target.href;
-      showLinkTooltip(event.target);
-    }
-  });
-
-  contentEditable.addEventListener("mouseout", (event) => {
-    if (event.target.tagName === "A") {
-      hideLinkTooltip();
     }
   });
 });
@@ -86,23 +41,14 @@ onMounted(() => {
 onUnmounted(() => {
   document.removeEventListener("selectionchange", checkSelection);
   document.removeEventListener("click", hideToolbar);
-  const contentEditable = document.getElementById("editor");
-  if (contentEditable) {
-    contentEditable.removeEventListener("mouseover");
-    contentEditable.removeEventListener("mouseout");
-  }
 });
 
 const checkSelection = () => {
   const selection = window.getSelection();
   if (!selection.rangeCount || selection.isCollapsed) {
-    if (!isLinkPopoverVisible.value) {
-      hideToolbar();
-    }
+    hideToolbar();
   } else {
     showToolbar();
-    // Simpan range yang dipilih untuk digunakan nanti saat menambahkan link
-    selectedRange.value = selection.getRangeAt(0);
   }
 };
 
@@ -129,13 +75,6 @@ const showToolbar = () => {
 
   toolbar.value.classList.remove("invisible");
   toolbar.value.classList.add("opacity-100");
-  
-  // Tentukan mana yang harus ditampilkan berdasarkan mode
-  if (isLinkPopoverVisible.value) {
-    showLinkPopover();
-  } else {
-    showToolbarButtons();
-  }
 };
 
 const hideToolbar = () => {
@@ -145,90 +84,38 @@ const hideToolbar = () => {
   }
 };
 
-// Fungsi untuk menampilkan tombol toolbar
-const showToolbarButtons = () => {
-  if (toolbarButtons.value && linkPopover.value) {
-    toolbarButtons.value.style.display = "flex";
-    linkPopover.value.style.display = "none";
-  }
-};
-
-// Fungsi untuk menampilkan input link
 const showLinkPopover = () => {
-  if (toolbarButtons.value && linkPopover.value) {
-    toolbarButtons.value.style.display = "none";
-    linkPopover.value.style.display = "block";
-  }
-};
+  const selection = window.getSelection();
+  if (!selection.rangeCount) return;
 
-const addLink = () => {
+  const range = selection.getRangeAt(0);
+  const rect = range.getBoundingClientRect();
+
+  if (rect.width === 0 && rect.height === 0) return;
+
+  const popoverWidth = linkPopover.value.offsetWidth || 150;
+  const popoverHeight = linkPopover.value.offsetHeight || 40;
+
+  let leftPosition = rect.left + window.scrollX + rect.width / 2 - popoverWidth / 2 - 60;
+
+  if (window.innerWidth <= 768) {
+    leftPosition = rect.left + window.scrollX + rect.width / 2 - popoverWidth / 2 + 60;
+  }
+
+  linkPopover.value.style.top = `${rect.top + window.scrollY - popoverHeight - 70}px`;
+  linkPopover.value.style.left = `${leftPosition}px`;
+
   isLinkPopoverVisible.value = true;
-  showLinkPopover();
-  
-  // Fokus ke input link
-  setTimeout(() => {
-    if (linkInput.value) {
-      linkInput.value.focus();
-    }
-  }, 100);
+  hideToolbar();
 };
 
 const hideLinkPopover = () => {
-  // Jika ada teks di input dan ada range yang dipilih, tambahkan link
-  if (linkText.value && selectedRange.value) {
-    applyLink();
-  }
-  
   isLinkPopoverVisible.value = false;
-  showToolbarButtons();
-  linkText.value = ""; // Reset input link
-};
-
-const applyLink = () => {
-  try {
-    // Pilih kembali range yang disimpan
-    const selection = window.getSelection();
-    selection.removeAllRanges();
-    selection.addRange(selectedRange.value);
-
-    // Terapkan link dengan execCommand
-    document.execCommand("createLink", false, linkText.value);
-    
-    // Tambahkan style pada link
-    const links = document.querySelectorAll("#editor a");
-    links.forEach(link => {
-      link.style.textDecoration = "underline";
-      link.style.color = "#3366CC";
-      link.setAttribute("title", link.href);
-    });
-  } catch (error) {
-    console.error("Error applying link:", error);
-  }
-};
-
-const showLinkTooltip = (linkElement) => {
-  if (!tooltip.value) return;
-  
-  const rect = linkElement.getBoundingClientRect();
-  
-  tooltip.value.textContent = linkElement.href;
-  tooltip.value.style.top = `${rect.bottom + window.scrollY + 5}px`;
-  tooltip.value.style.left = `${rect.left + window.scrollX}px`;
-  
-  tooltip.value.classList.remove("invisible");
-  tooltip.value.classList.add("opacity-100");
-};
-
-const hideLinkTooltip = () => {
-  if (tooltip.value) {
-    tooltip.value.classList.add("invisible");
-    tooltip.value.classList.remove("opacity-100");
-  }
+  showToolbar();
 };
 
 const formatText = (command) => {
   document.execCommand("styleWithCSS", false, true);
-  document.execCommand("fontName", false, "sans-serif");
 
   if (command === "big") {
     if (isBigFont.value) {
@@ -240,6 +127,40 @@ const formatText = (command) => {
   } else {
     document.execCommand(command, false, null);
   }
+};
+
+const addLink = () => {
+  showLinkPopover();
+};
+
+// Menangani hover pada link
+const handleMouseOver = (event) => {
+  if (event.target.tagName === "A") {
+    hoveredLink.value = event.target.href;
+    showTooltip(event.target);
+  }
+};
+
+// Menyembunyikan popover saat mouse keluar dari link
+const handleMouseOut = (event) => {
+  if (event.target.tagName === "A") {
+    hideTooltip();
+  }
+};
+
+// Menampilkan tooltip pada posisi yang sesuai
+const showTooltip = (target) => {
+  const rect = target.getBoundingClientRect();
+  tooltip.value.style.top = `${rect.bottom + window.scrollY + 5}px`;
+  tooltip.value.style.left = `${rect.left + window.scrollX}px`;
+  tooltip.value.classList.remove("invisible");
+  tooltip.value.classList.add("opacity-100");
+};
+
+// Menyembunyikan tooltip
+const hideTooltip = () => {
+  tooltip.value.classList.add("invisible");
+  tooltip.value.classList.remove("opacity-100");
 };
 </script>
 
@@ -332,43 +253,39 @@ const formatText = (command) => {
       class="mt-4 text-gray-700 w-full min-h-screen outline-none p-2 placeholder"
       data-placeholder="Write your story, make impactful words."
     ></div>
-    
     <!-- Toolbar popover -->
-    <div ref="toolbar" id="popover-default" role="tooltip" class="absolute z-10 invisible inline-block w-45 lg:w-50 text-4 lg:text-5 transition-opacity duration-300 bg-black border border-white rounded-lg shadow-xs opacity-0">
-      <!-- Tombol-tombol toolbar -->
-      <div ref="toolbarButtons" id="toolbar-buttons" class="flex flex-row px-3 py-2 text-white justify-between">
+    <div ref="toolbar" id="popover-default" role="tooltip" class="absolute z-10 invisible inline-block w-35 lg:w-50 text-4 lg:text-5 transition-opacity duration-300 bg-black border border-white rounded-lg shadow-xs opacity-0">
+      <div class="flex flex-row px-3 py-2 text-white justify-between">
         <button @click="formatText('big')" class="relative transition-all duration-300 transform hover:scale-105 hover:rotate-16"><h2>T</h2></button>
         <button @click="formatText('bold')" class="relative transition-all duration-300 transform hover:scale-105 hover:rotate-16"><h2 class="font-bold">B</h2></button>
         <button @click="formatText('underline')" class="relative transition-all duration-300 transform hover:scale-105 hover:rotate-16"><h2 class="underline">U</h2></button>
         <button @click="formatText('italic')" class="relative transition-all duration-300 transform hover:scale-105 hover:rotate-16"><h2 class="italic">I</h2></button>
         <button @click="addLink" class="relative transition-all duration-300 transform hover:scale-105 hover:rotate-16"><img src="/public/icon/icons-link.ico" alt="link" class="w-3 lg:w-4 h-3 lg:h-4"/></button>
       </div>
-      
-      <!-- Link Popover - ini akan tersembunyi secara default -->
-      <div ref="linkPopover" id="link-popover" style="display: none;" class="px-3 py-2 text-white w-45 lg:w-50">
-        <div class="flex flex-row justify-center w-full">
-          <input ref="linkInput" v-model="linkText" type="text" class="font-sprat bg-transparent text-sm focus:outline-none focus:ring-0 focus:ring-transparent" placeholder="Paste or type a link here" @click.stop />
-          <button class="ml-2 lg:ml-5 text-md self-center relative transition-all duration-300 transform hover:scale-105 hover:rotate-16" @click.stop="hideLinkPopover">x</button>
-        </div>
-      </div>
-      
       <div data-popper-arrow></div>
     </div>
-    
-    <!-- Link Tooltip yang akan muncul saat hover pada link -->
-    <div id="link-tooltip" ref="tooltip" class="absolute z-20 invisible bg-black text-white text-xs p-2 rounded transition-opacity duration-300 opacity-0">
+    <!-- Link Input Popover -->
+    <div v-show="isLinkPopoverVisible" ref="linkPopover" class="absolute z-10 text-xs inline-block w-45 lg:w-55 transition-opacity duration-300 bg-black border border-white rounded-lg shadow-xs opacity-100">
+      <div class="flex flex-row px-3 py-2 text-white justify-between">
+        <input v-model="linkInput" placeholder="Paste or type link" class="outline-none w-full"/>
+        <button @click="hideLinkPopover" class="text-white relative transition-all duration-300 transform hover:scale-105 hover:rotate-16 ml-5">X</button>
+      </div>
+      <div data-popper-arrow></div>
+    </div>
+    <!-- Popover link hover -->
+    <div
+      ref="tooltip"
+      id="tooltip-bottom"
+      role="tooltip"
+      class="absolute z-10 invisible px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-xs opacity-0"
+    >
       {{ hoveredLink }}
+      <div class="tooltip-arrow" data-popper-arrow></div>
     </div>
   </div>
 </template>
 
 <style scoped>
-#editor {
-  font-family: sans-serif !important;
-}
-#editor * {
-  font-family: inherit !important; /* Memastikan semua elemen di dalam editor mengikuti font dari #editor */
-}
 button {
   cursor: pointer;
 }
@@ -407,4 +324,9 @@ button {
   justify-content: center; /* Center text horizontally */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Slight shadow */
 }
+
+#editor {
+  font-family: sans-serif !important;
+}
+
 </style>

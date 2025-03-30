@@ -41,7 +41,7 @@ const {
                 !fullWidthBorder ? 'border-t-1 border-gray-200 dark:border-gray-800 mt-[-1px]' : '',
             ]}></span>}
         {source && <span class="section--source font-sprat text-12.8px">{source}</span>}
-        <div class:list={[padBlock && "py-10","content-container dark:bg-gray-900 dark:c-gray-200 dark-inside:bg-gray-900 dark-inside:c-gray-200"]}>
+        <div class:list={[padBlock && "py-10","content-container"]}>
             <slot />
         </div>
     </div>

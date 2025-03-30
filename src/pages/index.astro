@@ -5,13 +5,14 @@ import Section from "../components/Section.astro";
 import BestStory from "./story/BestStory.vue";
 import TodaysHugging from "./story/TodaysHugging.vue";
 import TheLatestStories from "./story/TheLatestStories.vue";
+import BestsellerBooks from "./books/BestsellerBooks.vue";
 import SectionSpacer from "../components/SectionSpacer.astro";
 import InvestorGrid from "../components/InvestorGrid.astro";
 import FirstLoader from "../components/FirstLoader.vue";
 ---
 
 <Layout title="Welcome to Beeyond The Pages.">
-  <FirstLoader client:load />
+  <!-- <FirstLoader client:load /> -->
   <Header gridBg>
     <small class="small">Do you believe those words are magic?</small>
     <h2 class="text-6 leading-6 lg:text-20 lg:leading-20">
@@ -48,6 +49,15 @@ import FirstLoader from "../components/FirstLoader.vue";
     <Section index padBlock={false}>
       <TheLatestStories client:load />
     </Section>
+    <SectionSpacer
+      size="sm"
+      text="BESTSELLER BOOKS OF THE MONTH"
+      link="/"
+      linkText="View All"
+    />
+    <Section index padBlock={false}>
+      <BestsellerBooks client:load />
+    </Section>
     <SectionSpacer size="sm" />
     <Section variant="dark" source="statement.md" fullWidthBorder>
       <div class="lg:w-[90%] md:w-[70%] mx-auto">
@@ -66,7 +76,7 @@ import FirstLoader from "../components/FirstLoader.vue";
       </div>
     </Section>
     <SectionSpacer size="sm" />
-    <Section index source="investors.md" fullWidthBorder>
+    <!-- <Section index source="investors.md" fullWidthBorder>
       <div class="pb-12.5">
         <h2 class="title">People who give us money!</h2>
         <p class="subtitle-small md:w-[50%]">
@@ -75,7 +85,7 @@ import FirstLoader from "../components/FirstLoader.vue";
         </p>
       </div>
       <InvestorGrid />
-    </Section>
+    </Section> -->
     <SectionSpacer />
     <Section
       index

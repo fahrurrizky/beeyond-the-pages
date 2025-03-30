@@ -1,57 +1,44 @@
-<script>
-export default {
-  name: 'BaseButton',
-  props: {
-    color: {
-      type: String,
-      default: 'success',
-    },
-    size: {
-      type: String,
-      default: 'md',
-    },
-    variant: {
-      type: String,
-      default: 'fill',
-    },
-    fullWidth: {
-      type: Boolean,
-      default: false,
-    },
-    active: {
-      type: Boolean,
-      default: false,
-    },
-    loading: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  methods: {
-    getClasses: (variant, color, size, fullWidth, active) => {
-      let colorValue;
-      const sizeValue = size ? `btn-${size}` : '';
-      const fullWidthValue = fullWidth ? 'w-100' : '';
-      const activeValue = active ? 'active' : '';
+<script setup>
+import { computed } from "vue";
 
-      // Setting the button variant and color
-      if (variant === 'gradient') {
-        colorValue = `bg-gradient-${color}`;
-      } else if (variant === 'outline') {
-        colorValue = `btn-outline-${color}`;
-      } else {
-        colorValue = `btn-${color}`;
-      }
-
-      return `${colorValue} ${sizeValue} ${fullWidthValue} ${activeValue}`;
-    },
+const props = defineProps({
+  size: {
+    type: String,
+    default: "md",
   },
-};
+  fullWidth: {
+    type: Boolean,
+    default: false,
+  },
+  active: {
+    type: Boolean,
+    default: false,
+  },
+  loading: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+// Kelas tombol berdasarkan properti
+const buttonClasses = computed(() => {
+  const sizeClass = {
+    sm: "px-3 py-1 text-sm",
+    md: "px-4 py-2 text-base",
+    lg: "px-5 py-3 text-lg",
+  }[props.size];
+
+  const fullWidthClass = props.fullWidth ? "w-full" : "";
+  const activeClass = props.active ? "ring-2 ring-gray-500" : "";
+  const disabledClass = props.loading ? "opacity-50 cursor-not-allowed" : "hover:ring-2";
+
+  return `border border-gray-400 text-gray-700 rounded-md transition-all duration-200 ${sizeClass} ${fullWidthClass} ${activeClass} ${disabledClass}`;
+});
 </script>
 
 <template>
-  <button class="btn mb-0" :class="getClasses(variant, color, size, fullWidth, active)" :disabled="loading">
-    <span v-if="loading" class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+  <button :class="buttonClasses" :disabled="loading" type="button">
+    <span v-if="loading" class="animate-spin border-2 border-gray-400 border-t-transparent rounded-full w-4 h-4 inline-block"></span>
     <slot v-else />
   </button>
 </template>

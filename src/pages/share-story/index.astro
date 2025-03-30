@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import Section from "../../components/Section.astro";
 import ShareSTory from "./ShareStory.vue";
+// import WriteStory from "./WriteStory.vue";
 
 
 const title = "Write a Story";
@@ -10,6 +11,7 @@ const title = "Write a Story";
     <main class="pt-15">
         <Section fullWidthBorder padBlock={false}>
             <ShareSTory client:load/>
+            <!-- <WriteStory client:load/> -->
         </Section>
     </main>
 </Layout>

@@ -70,7 +70,7 @@ onUnmounted(() => {
       v-if="!status"
       src="/public/icon/bee.gif"
       alt="Bee"
-      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-30 h-30"
+      class="absolute top-1/2 left-1/1.5 lg:left-1/1.8 transform -translate-x-1/2 -translate-y-1/2 w-30 h-30"
     />
 
     <div v-else-if="leftContent" class="lg:basis-2/3">

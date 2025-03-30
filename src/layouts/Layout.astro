@@ -1,5 +1,6 @@
 ---
 import Footer from "../components/Footer.astro";
+import SearchAutoComp from "../components/SearchAutoComp.vue";
 import { SITE_NAME } from "../consts";
 
 interface Props {
@@ -11,6 +12,7 @@ const navLinks = {
   "/blog": "Life",
   "/love": "Love",
   "/about": "Loss",
+  "/books": "& Books",
 };
 interface NavUser {
   href: string;
@@ -59,7 +61,7 @@ const isHomePage = Astro.url.pathname === "/";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="Beyond The Pages - Unveiling The World Through Words" />
@@ -68,6 +70,8 @@ const isHomePage = Astro.url.pathname === "/";
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#ffffff" />
     <title>{title || SITE_NAME}</title>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
   </head>
   <body>
     <!-- navbar -->
@@ -75,7 +79,7 @@ const isHomePage = Astro.url.pathname === "/";
       class="border-b-1 border-b-gray-200 fixed top-2 lg:top-0 right-0 left-0 lg:bg-white bg-white/50 backdrop-blur-md mx-4 lg:mx-0 lg:w-full rounded-[36px] lg:rounded-[0px] z-50"
     >
       <div
-        class="flex items-center justify-between lg:border-x-1 border-gray-200 pl-3 pr-5 wrapper mx-auto"
+        class="flex items-center justify-between lg:border-x-1 border-gray-200 pl-3 pr-5 wrapper mx-auto lg:py-2"
       >
         <img
           src="/public/logo/btp.png"
@@ -91,7 +95,7 @@ const isHomePage = Astro.url.pathname === "/";
 				<li class="grid-col-[span_1] block">
 				  <a
 					href={href}
-					class="text-sm py-5 tracking-0.1 block"
+					class="text-sm tracking-0.1 block"
 					onmouseover="this.style.opacity='0.2'"
 					onmouseout="this.style.opacity='1'"
 				  >
@@ -101,15 +105,7 @@ const isHomePage = Astro.url.pathname === "/";
 			  ))}
 			</ul>
 		  ) : (
-			<div class="hidden lg:relative lg:flex lg:items-center lg:py-3.7">
-				<img src="/public/icon/search.svg" alt="Search" class="absolute left-2 w-4 h-4"/>
-				<input
-					type="text"
-					placeholder="Search..."
-					class="p-1 pl-6 text-sm w-70 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-200"
-					aria-label="Search"
-				/>
-			</div>
+			<SearchAutoComp client:load />
 		  )}
         </ul>
         <ul class={`grid grid-auto-flow-col items-center gap-5 relative`}>
@@ -130,7 +126,7 @@ const isHomePage = Astro.url.pathname === "/";
 							{notificationCount}
 						  </span>
 						)}
-						<span class="absolute top-full left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+						<span class="absolute top-full left-1/2,1 transform -translate-x-1/2,1 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
 						  {hoverText}
 						</span>
 					  </a>
